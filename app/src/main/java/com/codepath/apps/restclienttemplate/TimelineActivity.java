@@ -1,11 +1,13 @@
 package com.codepath.apps.restclienttemplate;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +20,7 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +30,7 @@ import okhttp3.Headers;
 public class TimelineActivity extends AppCompatActivity implements View.OnClickListener{
     //make a debug custom tag
     public static final String TAG = "TimelineActivity";
+    public final int REQUEST_CODE = 20;
 
     TwitterClient client;
     RecyclerView rvTweets;
@@ -64,16 +68,34 @@ public class TimelineActivity extends AppCompatActivity implements View.OnClickL
         return true;
     }
 
+    //When options item is selected, make sure it is the compose item, and open compose activity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.compose){
             //Compose icon is tapped
             //navigate to the compose activity
             Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
-            startActivity(i);
+            startActivityForResult(i, REQUEST_CODE);
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        //Make sure it is returning the same request we made earlier, and the result is ok
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK){
+            //get data from the intent and unwrap parcel
+            Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
+            //update the recycler view with the new tweet
+            //modify data source
+            tweets.add(0, tweet);
+            //update the adapter
+            adapter.notifyItemInserted(0);
+            //scroll to the top of the recycler view
+            rvTweets.smoothScrollToPosition(0);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     //Get all Tweets, and notify the adapter that they have been added
