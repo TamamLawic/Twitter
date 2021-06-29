@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -18,7 +21,7 @@ import java.util.List;
 
 import okhttp3.Headers;
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineActivity extends AppCompatActivity implements View.OnClickListener{
     //make a debug custom tag
     public static final String TAG = "TimelineActivity";
 
@@ -26,6 +29,7 @@ public class TimelineActivity extends AppCompatActivity {
     RecyclerView rvTweets;
     List<Tweet> tweets;
     TweetsAdapter adapter;
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,8 @@ public class TimelineActivity extends AppCompatActivity {
         //find recycler view
         rvTweets = findViewById(R.id.rvTweets);
 
+        button = findViewById(R.id.button2);
+
         //initialize tweets in adapter
         tweets = new ArrayList<>();
         adapter = new TweetsAdapter(this, tweets);
@@ -47,7 +53,7 @@ public class TimelineActivity extends AppCompatActivity {
         populateHomeTimeline();
     }
 
-    //
+    //Get all Tweets, and notify the adapter that they have been added
     private void populateHomeTimeline() {
         client.getHomeTimeline(new JsonHttpResponseHandler() {
             @Override
@@ -71,4 +77,13 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
     }
-}
+
+    //Log out the user currently logged in when LogOutButton Clicked
+    @Override
+    public void onClick(View v) {
+        client.clearAccessToken();
+        Intent i = new Intent(TimelineActivity.this, LoginActivity.class);
+        startActivity(i);
+        finish();
+    }
+    }
