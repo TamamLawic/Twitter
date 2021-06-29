@@ -68,8 +68,9 @@ public class TimelineActivity extends AppCompatActivity implements View.OnClickL
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.compose){
             //Compose icon is tapped
-            Toast.makeText(this, "Compose!", Toast.LENGTH_SHORT).show();
             //navigate to the compose activity
+            Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
+            startActivity(i);
             return true;
         }
         return super.onOptionsItemSelected(item);
