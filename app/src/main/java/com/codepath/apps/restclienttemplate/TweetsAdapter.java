@@ -6,12 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.request.RequestOptions;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +23,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
-
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder>{
     Context context;
@@ -63,6 +65,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvBody;
         TextView tvScreenName;
         TextView tvTime;
+        ListView lvImages;
+        listViewAdapter lvAdaper;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -71,7 +75,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody = itemView.findViewById(R.id.tvBody);
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
             tvTime = itemView.findViewById(R.id.tvTime);
-
+            lvImages = itemView.findViewById(R.id.lvImages);
 
         }
         //bind the tweet into the recyclerview
@@ -79,7 +83,31 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
             tvTime.setText(tweet.createdAt);
+
+            //Add image into Image View
+            if (!tweet.urls.isEmpty()) {
+                lvImages.setVisibility(View.VISIBLE);
+                lvAdaper = new listViewAdapter(context, tweet.urls);
+                lvImages.setAdapter(lvAdaper);
+            } else {
+                lvImages.setVisibility(View.GONE);
+            }
+            Log.d("TweetsAdapter", String.valueOf(tweet.urls.size()) + tweet.user.screenName);
             Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfileImage);
+
         }
+    }
+
+
+    // Clean all elements of the recycler
+    public void clear() {
+        tweets.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items -- change to type used
+    public void addAll(List<Tweet> list) {
+        tweets.addAll(list);
+        notifyDataSetChanged();
     }
 }

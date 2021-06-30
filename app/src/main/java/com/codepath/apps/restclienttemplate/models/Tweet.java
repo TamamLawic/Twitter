@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate.models;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,6 +20,8 @@ public class Tweet {
     public String body;
     public String createdAt;
     public User user;
+    public List<String> urls;
+
 
     //empty constructor needed for Parcels
     public Tweet() {}
@@ -30,7 +33,29 @@ public class Tweet {
         tweet.createdAt = getRelativeTimeAgo(jsonObject.getString("created_at"));
         //must convert into a java USER Class
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+
+        //Get Urls for the media/photos
+        Log.i("TWEEET DATA", jsonObject.toString());
+        //get the media URL for the tweet if it exists
+        if(jsonObject.has("extended_entities")){
+            Log.i("TWEEET DATA", "it has media!");
+            tweet.urls = getImageUrlArray(jsonObject.getJSONObject("extended_entities").getJSONArray("media"));
+            Log.i("TWEEET DATA", tweet.urls.toString());
+        }
+        else {
+            tweet.urls = new ArrayList<>();
+        }
         return tweet;
+    }
+
+    //Get Array of Strings, of all the urls for the media/pictures in the tweet
+    private static List<String> getImageUrlArray(JSONArray jsonArray) throws JSONException {
+        List<String> urls = new ArrayList<>();
+        //traverse all media and add into list of URLS for the tweet
+        for (int i = 0; i < jsonArray.length(); i++) {
+            urls.add(jsonArray.getJSONObject(i).getString("media_url_https"));
+        }
+        return urls;
     }
 
 

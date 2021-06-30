@@ -45,4 +45,17 @@
         android:layout_marginTop="0dp"
         android:layout_marginEnd="5dp"
         android:text="8m" />
+
+    <ListView
+        android:id="@+id/lvImages"
+        android:layout_width="396dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvBody"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="0dp" />
+
 </RelativeLayout>
