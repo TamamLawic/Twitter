@@ -7,12 +7,103 @@
     tools:context=".DetailsActivity">
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="266dp"
-        android:layout_height="245dp"
+        android:id="@+id/ivTweetPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTweetDetails"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.606"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="100dp"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/ivProfileDetails"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvScreenNameDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/ivProfileDetails"
+        android:text="TextView"
+        android:textColor="@color/cardview_dark_background" />
+
+    <TextView
+        android:id="@+id/tvTweetDetails"
+        android:layout_width="272dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvScreenNameDetails"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/ivProfileDetails"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/btnRespond"
+        android:layout_width="30dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/ivTweetPhoto"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="62dp"
+        android:layout_marginTop="9dp"
+        android:background="@android:drawable/ic_menu_revert" />
+
+    <Button
+        android:id="@+id/btnRetweets"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/ivTweetPhoto"
+        android:layout_marginStart="83dp"
+        android:layout_marginTop="11dp"
+        android:layout_toEndOf="@+id/btnRespond"
+        android:background="@drawable/ic_vector_retweet_stroke" />
+
+    <Button
+        android:id="@+id/btnLike"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/ivTweetPhoto"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="13dp"
+        android:layout_toEndOf="@+id/tvRetweetsDetails"
+        android:background="@drawable/ic_vector_heart_stroke" />
+
+    <TextView
+        android:id="@+id/tvRetweetsDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivTweetPhoto"
+        android:layout_alignParentBottom="false"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="339dp"
+        android:layout_toEndOf="@+id/btnRetweets"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvLikesDetails"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivTweetPhoto"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
+        android:layout_toEndOf="@+id/btnLike"
+        android:text="10" />
 </RelativeLayout>

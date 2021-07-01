@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +17,11 @@ import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
 import org.jetbrains.annotations.NotNull;
+import org.parceler.Parcels;
 
 import java.util.List;
 
-public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder>{
+public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
     Context context;
     List<Tweet> tweets;
 
@@ -54,7 +56,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
 
     //define a view holder
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         ImageView ivProfileImage;
         TextView tvBody;
@@ -75,6 +77,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             lvImages = itemView.findViewById(R.id.lvImages);
             tvRetweets = itemView.findViewById(R.id.tvRetweets);
             tvLikes = itemView.findViewById(R.id.tvLikes);
+            itemView.setOnClickListener(this);
 
         }
         //bind the tweet into the recyclerview
@@ -97,7 +100,25 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfileImage);
 
         }
+
+        @Override
+        public void onClick(View view) {
+            // gets item position
+            int position = getAdapterPosition();
+            // makes sure the position exists
+            if (position != RecyclerView.NO_POSITION) {
+                // get the movie at the position
+                Tweet tweet = tweets.get(position);
+                // create intent for the new activity
+                Intent intent = new Intent(context, DetailsActivity.class);
+                // serialize the tweet using parceler, use its short name as a key
+                intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
+                // display activity
+                context.startActivity(intent);
+            }
+        }
     }
+
 
 
     // Clean all elements of the recycler

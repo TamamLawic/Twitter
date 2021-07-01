@@ -111,4 +111,30 @@ public class Tweet {
         return "";
     }
 
+    //Make getters for tweet data
+
+
+    public String getBody() {
+        return body;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public List<String> getUrls() {
+        return urls;
+    }
+
+    public String getRetweets() {
+        return retweets;
+    }
+
+    public String getLikes() {
+        return likes;
+    }
 }
