@@ -2,20 +2,18 @@ package com.codepath.apps.restclienttemplate;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -39,7 +37,7 @@ public class TimelineActivity extends AppCompatActivity implements View.OnClickL
     RecyclerView rvTweets;
     List<Tweet> tweets;
     TweetsAdapter adapter;
-    Button button;
+    Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +48,7 @@ public class TimelineActivity extends AppCompatActivity implements View.OnClickL
         //find recycler view
         rvTweets = findViewById(R.id.rvTweets);
 
-        button = findViewById(R.id.button2);
+        btnLogout = findViewById(R.id.btnLogout);
 
         //initialize tweets in adapter
         tweets = new ArrayList<>();
@@ -59,6 +57,7 @@ public class TimelineActivity extends AppCompatActivity implements View.OnClickL
         //configure recycler view : layout manager and adapter
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
         rvTweets.setAdapter(adapter);
+        rvTweets.addItemDecoration(new DividerItemDecoration(rvTweets.getContext(), DividerItemDecoration.VERTICAL));
         populateHomeTimeline();
 
 

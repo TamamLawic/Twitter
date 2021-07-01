@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".TimelineActivity">
 
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="142dp"
+        android:layout_height="119dp"
+        android:layout_below="@+id/swipeContainer"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="245dp"
+        android:layout_marginTop="-62dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="onClick"
+        android:text="LogOut" />
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
@@ -15,7 +29,7 @@
             android:id="@+id/rvTweets"
             android:layout_width="match_parent"
             android:layout_height="665dp"
-            android:layout_above="@+id/button2"
+            android:layout_above="@+id/btnLogout"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="0dp"
@@ -25,17 +39,4 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/swipeContainer"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="162dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
-        android:onClick="onClick"
-        android:text="LogOut" />
 </RelativeLayout>

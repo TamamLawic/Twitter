@@ -24,7 +24,8 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/ivProfileImage"
-        android:text="SvanPelt" />
+        android:text="SvanPelt"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:id="@+id/tvBody"
@@ -34,6 +35,8 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/ivProfileImage"
+        android:autoLink="all"
+        android:linksClickable="true"
         android:text="This is my totally cool Tweet about my project!" />
 
     <TextView
@@ -48,14 +51,68 @@
 
     <ListView
         android:id="@+id/lvImages"
-        android:layout_width="396dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="260dp"
         android:layout_below="@+id/tvBody"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="false"
         android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="0dp" />
+        android:layout_marginEnd="5dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/lvImages"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="108dp"
+        android:background="@drawable/ic_vector_heart_stroke" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/lvImages"
+        android:layout_alignParentBottom="false"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginBottom="6dp"
+        android:layout_toEndOf="@+id/btnReply"
+        android:background="@drawable/ic_vector_retweet_stroke" />
+
+    <Button
+        android:id="@+id/btnReply"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/lvImages"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="4dp"
+        android:background="@android:drawable/ic_menu_revert" />
+
+    <TextView
+        android:id="@+id/tvRetweets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lvImages"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_toStartOf="@+id/button"
+        android:layout_toEndOf="@+id/button3"
+        android:text="10" />
+
+    <TextView
+        android:id="@+id/tvLikes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lvImages"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="false"
+        android:layout_marginStart="-100dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="7dp"
+        android:layout_toEndOf="@+id/button"
+        android:text="0000" />
 
 </RelativeLayout>

@@ -21,6 +21,9 @@ public class Tweet {
     public String createdAt;
     public User user;
     public List<String> urls;
+    public String retweets;
+    public String likes;
+
 
 
     //empty constructor needed for Parcels
@@ -31,6 +34,8 @@ public class Tweet {
         Tweet tweet = new Tweet();
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = getRelativeTimeAgo(jsonObject.getString("created_at"));
+        tweet.retweets = jsonObject.getString("retweet_count");
+        tweet.likes = jsonObject.getString("favorite_count");
         //must convert into a java USER Class
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
 

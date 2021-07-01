@@ -13,16 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.request.RequestOptions;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder>{
     Context context;
@@ -66,7 +61,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvScreenName;
         TextView tvTime;
         ListView lvImages;
-        listViewAdapter lvAdaper;
+        listViewAdapter lvAdapter;
+        TextView tvRetweets;
+        TextView  tvLikes;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -76,6 +73,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
             tvTime = itemView.findViewById(R.id.tvTime);
             lvImages = itemView.findViewById(R.id.lvImages);
+            tvRetweets = itemView.findViewById(R.id.tvRetweets);
+            tvLikes = itemView.findViewById(R.id.tvLikes);
 
         }
         //bind the tweet into the recyclerview
@@ -83,12 +82,14 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
             tvTime.setText(tweet.createdAt);
+            tvRetweets.setText(tweet.retweets);
+            tvLikes.setText(tweet.likes);
 
             //Add image into Image View
             if (!tweet.urls.isEmpty()) {
                 lvImages.setVisibility(View.VISIBLE);
-                lvAdaper = new listViewAdapter(context, tweet.urls);
-                lvImages.setAdapter(lvAdaper);
+                lvAdapter = new listViewAdapter(context, tweet.urls);
+                lvImages.setAdapter(lvAdapter);
             } else {
                 lvImages.setVisibility(View.GONE);
             }
