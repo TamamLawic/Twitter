@@ -60,7 +60,12 @@ public class DetailsActivity extends AppCompatActivity {
 
         //set profile image and tweet photo with glide
         Glide.with(this).load(tweet.user.profileImageUrl).into(ivProfileDetails);
-        Glide.with(this).load(tweet.getUrls().get(0)).override(Target.SIZE_ORIGINAL, 800).into(ivTweetPhoto);
+        if (!tweet.getUrls().isEmpty()){
+            Glide.with(this).load(tweet.getUrls().get(0)).override(Target.SIZE_ORIGINAL, 800).into(ivTweetPhoto);
+        }
+        else {
+            ivTweetPhoto.setVisibility(View.INVISIBLE);
+        }
 
 
 

@@ -55,6 +55,19 @@ public class TwitterClient extends OAuthBaseClient {
 		client.get(apiUrl, params, handler);
 	}
 
+	// API call to get more of the timeline from Twitter Account
+	public void getNextTimeline(JsonHttpResponseHandler handler, long max_id) {
+		String apiUrl = getApiUrl("statuses/home_timeline.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("count", 25);
+		//Ask for Tweets only occurring after a certain time
+		params.put("max_id", max_id);
+
+		client.get(apiUrl, params, handler);
+	}
+
+
 	// API call to post tweet from Twitter Account
 	public void publishTweet(String tweetContent, JsonHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/update.json");

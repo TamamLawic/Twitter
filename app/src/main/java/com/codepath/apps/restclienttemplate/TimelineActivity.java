@@ -32,6 +32,10 @@ public class TimelineActivity extends AppCompatActivity implements View.OnClickL
     public static final String TAG = "TimelineActivity";
     public final int REQUEST_CODE = 20;
     private SwipeRefreshLayout swipeContainer;
+    public long max_id;
+
+    //endless scrolling
+    private EndlessRecyclerViewScrollListener scrollListener;
 
     TwitterClient client;
     RecyclerView rvTweets;
@@ -55,10 +59,24 @@ public class TimelineActivity extends AppCompatActivity implements View.OnClickL
         adapter = new TweetsAdapter(this, tweets);
 
         //configure recycler view : layout manager and adapter
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rvTweets.setLayoutManager(linearLayoutManager);
         rvTweets.setAdapter(adapter);
         rvTweets.addItemDecoration(new DividerItemDecoration(rvTweets.getContext(), DividerItemDecoration.VERTICAL));
         populateHomeTimeline();
+
+        //Add endless scrolling
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                loadNextDataFromApi();
+            }
+        };
+        // Adds the scroll listener to RecyclerView
+        rvTweets.addOnScrollListener(scrollListener);
+
 
 
         // Lookup the swipe container view
@@ -81,6 +99,40 @@ public class TimelineActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    //used to load next data for endless scrolling
+    private void loadNextDataFromApi() {
+        // Send an API request to retrieve appropriate paginated data
+        //  --> Send the request including an offset value (i.e `page`) as a query parameter.
+        //  --> Deserialize and construct new model objects from the API response
+        //  --> Append the new data objects to the existing set of items inside the array of items
+        //  --> Notify the adapter of the new items made with `notifyItemRangeInserted()`
+        client.getNextTimeline(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.i("AddMore", "+ 25");
+                JSONArray jsonArray = json.jsonArray;
+                try {
+                    List<Tweet> newTweets = Tweet.fromJsonArray(jsonArray);
+                    //add tweets pulled
+                    tweets.addAll(newTweets);
+                    max_id = tweets.get(tweets.size()-1).getId();
+                    //notify the adapter that the tweets were added
+                    adapter.notifyDataSetChanged();
+                    //update the max id for tweets
+                } catch (JSONException e) {
+                    Log.e("AddMore", "json exception");
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.e(TAG, "onFailure!" + response, throwable);
+            }
+        }, max_id
+        );
+    }
+
+
     //When the options menu is created, inflate the menu item
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,6 +150,13 @@ public class TimelineActivity extends AppCompatActivity implements View.OnClickL
             Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
             startActivityForResult(i, REQUEST_CODE);
             return true;
+        }
+        //if logout button selected, logout the user
+        if (item.getItemId() == R.id.logOut){
+            client.clearAccessToken();
+            Intent i = new Intent(TimelineActivity.this, LoginActivity.class);
+            startActivity(i);
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -127,8 +186,10 @@ public class TimelineActivity extends AppCompatActivity implements View.OnClickL
                 Log.i(TAG, "onSuccess!" + json.toString());
                 JSONArray jsonArray = json.jsonArray;
                 try {
+                    List<Tweet> newTweets = Tweet.fromJsonArray(jsonArray);
                     //add tweets pulled
-                    tweets.addAll(Tweet.fromJsonArray(jsonArray));
+                    tweets.addAll(newTweets);
+                    max_id = tweets.get(tweets.size()-1).getId();
                     //notify the adapter that the tweets were added
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {

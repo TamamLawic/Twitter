@@ -23,6 +23,7 @@ public class Tweet {
     public List<String> urls;
     public String retweets;
     public String likes;
+    public long id;
 
 
 
@@ -38,6 +39,7 @@ public class Tweet {
         tweet.likes = jsonObject.getString("favorite_count");
         //must convert into a java USER Class
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+        tweet.id = jsonObject.getLong("id");
 
         //Get Urls for the media/photos
         Log.i("TWEEET DATA", jsonObject.toString());
@@ -136,5 +138,9 @@ public class Tweet {
 
     public String getLikes() {
         return likes;
+    }
+
+    public long getId() {
+        return id;
     }
 }
