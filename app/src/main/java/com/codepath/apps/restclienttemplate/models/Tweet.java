@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Locale;
 
 @Parcel
-public class Tweet {
+public class Tweet{
 
     public String body;
     public String createdAt;
@@ -31,9 +31,13 @@ public class Tweet {
     public Tweet() {}
 
     //Build the Tweet Per the fields in the JSONObject
-    public static Tweet fromJson(JSONObject jsonObject) throws JSONException {
+    public static Tweet fromJson(JSONObject jsonObject) throws JSONException{
         Tweet tweet = new Tweet();
-        tweet.body = jsonObject.getString("text");
+        if(jsonObject.has("full_text")) {
+            tweet.body = jsonObject.getString("full_text");
+        } else {
+            tweet.body = jsonObject.getString("text");
+        }
         tweet.createdAt = getRelativeTimeAgo(jsonObject.getString("created_at"));
         tweet.retweets = jsonObject.getString("retweet_count");
         tweet.likes = jsonObject.getString("favorite_count");

@@ -27,7 +27,7 @@ import java.util.List;
 
 import okhttp3.Headers;
 
-public class TimelineActivity extends AppCompatActivity implements View.OnClickListener{
+public class TimelineActivity extends AppCompatActivity{
     //make a debug custom tag
     public static final String TAG = "TimelineActivity";
     public final int REQUEST_CODE = 20;
@@ -41,10 +41,10 @@ public class TimelineActivity extends AppCompatActivity implements View.OnClickL
     RecyclerView rvTweets;
     List<Tweet> tweets;
     TweetsAdapter adapter;
-    Button btnLogout;
+    Button btnReply;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
@@ -52,7 +52,7 @@ public class TimelineActivity extends AppCompatActivity implements View.OnClickL
         //find recycler view
         rvTweets = findViewById(R.id.rvTweets);
 
-        btnLogout = findViewById(R.id.btnLogout);
+        btnReply = findViewById(R.id.btnReply);
 
         //initialize tweets in adapter
         tweets = new ArrayList<>();
@@ -203,15 +203,6 @@ public class TimelineActivity extends AppCompatActivity implements View.OnClickL
                 Log.e(TAG, "onFailure!" + response, throwable);
             }
         });
-    }
-
-    //Log out the user currently logged in when LogOutButton Clicked
-    @Override
-    public void onClick(View v) {
-        client.clearAccessToken();
-        Intent i = new Intent(TimelineActivity.this, LoginActivity.class);
-        startActivity(i);
-        finish();
     }
 
     public void fetchTimelineAsync(int page) {

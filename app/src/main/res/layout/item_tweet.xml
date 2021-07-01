@@ -52,7 +52,7 @@
     <ListView
         android:id="@+id/lvImages"
         android:layout_width="wrap_content"
-        android:layout_height="260dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tvBody"
         android:layout_alignParentEnd="false"
         android:layout_marginStart="5dp"
