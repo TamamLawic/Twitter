@@ -65,7 +65,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         ListView lvImages;
         listViewAdapter lvAdapter;
         TextView tvRetweets;
-        TextView  tvLikes;
+        TextView tvLikes;
+        TextView tvUserName;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -77,16 +78,18 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             lvImages = itemView.findViewById(R.id.lvImages);
             tvRetweets = itemView.findViewById(R.id.tvRetweets);
             tvLikes = itemView.findViewById(R.id.tvLikes);
+            tvUserName = itemView.findViewById(R.id.tvUserName);
             itemView.setOnClickListener(this);
 
         }
         //bind the tweet into the recyclerview
         public void bind(Tweet tweet) {
             tvBody.setText(tweet.body);
-            tvScreenName.setText(tweet.user.screenName);
+            tvScreenName.setText(tweet.user.name);
             tvTime.setText(tweet.createdAt);
             tvRetweets.setText(tweet.retweets);
             tvLikes.setText(tweet.likes);
+            tvUserName.setText(tweet.user.screenName);
 
             //Add image into Image View
             if (!tweet.urls.isEmpty()) {

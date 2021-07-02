@@ -9,6 +9,7 @@ public class User {
 
     public String name;
     public String screenName;
+    public String userName;
     public String profileImageUrl;
 
     //Empty constructor needed for Parcel
@@ -19,6 +20,7 @@ public class User {
         User user = new User();
         user.name = jsonObject.getString("name");
         user.screenName = jsonObject.getString("screen_name");
+        user.userName = jsonObject.getString("name");
         user.profileImageUrl = jsonObject.getString("profile_image_url_https");
         return user;
     }
